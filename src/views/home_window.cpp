@@ -14,9 +14,10 @@
 #include "home_window.h"
 #include "ui_home_window.h"
 #include <utils/app_utils.h>
-#include <dialogs/book_select.h>
 #include <data/delegates/song_delegate.h>
+#include <views/dialogs/book_select.h>
 #include <views/presentor_window.h>
+#include <views/dialogs/app_options.h>
 #include <services/app_preferences.h>
 
 int fontSizePreview, fontSizePreviewType, selectedbook;
@@ -58,7 +59,7 @@ void HomeWindow::requestData()
 			appDb->connectionOpen("songs");
 			songs = appDb->fetchSongs();
 			appDb->connectionClose("songs");
-			populateSonglists(0);
+			populateSongLists(0);
 			isReady = true;
 		}
 		else
@@ -160,7 +161,7 @@ bool HomeWindow::populateSongbooks()
 	
 	if (books.size() != 0)
 	{
-		for (int i = 0; i < books.size(); i++)
+		for (size_t i = 0; i < books.size(); i++)
 		{
 			ui->cmbSongbooks->addItem(books[i].title);
 		}
@@ -169,7 +170,7 @@ bool HomeWindow::populateSongbooks()
 	return true;
 }
 
-void HomeWindow::populateSonglists(int book)
+void HomeWindow::populateSongLists(size_t book)
 {
 	if (book == 0 || book < books.size())
 	{
@@ -179,9 +180,34 @@ void HomeWindow::populateSonglists(int book)
 			filters.clear();
 			songModel->clear();
 
-			for (int i = 0; i < songs.size(); i++)
+			for (size_t i = 0; i < songs.size(); i++)
 			{
 				if (songs[i].categoryid == books[book].categoryid)
+				{
+					filters.push_back(songs[i]);
+					QStandardItem* songItem = new QStandardItem;
+					songItem->setData(QVariant::fromValue(songs[i]), Qt::UserRole + 1);
+					songModel->appendRow(songItem);
+				}
+			}
+			filterSonglists();
+		}
+	}
+}
+
+void HomeWindow::populateSongSearch(QString SearchStr)
+{
+	if (SearchStr.size() > 0)
+	{
+		if (songs.size() != 0)
+		{
+
+			filters.clear();
+			songModel->clear();
+
+			for (size_t i = 0; i < songs.size(); i++)
+			{
+				if (songs[i].title.contains(SearchStr) || songs[i].alias.contains(SearchStr) || songs[i].content.contains(SearchStr))
 				{
 					filters.push_back(songs[i]);
 					QStandardItem* songItem = new QStandardItem;
@@ -205,11 +231,6 @@ void HomeWindow::filterSonglists()
 		ui->lstResults->setCurrentIndex(songModel->index(0, 0));
 		openSongPreview(songModel->index(0, 0));
 	}
-}
-
-HomeWindow::~HomeWindow()
-{
-    delete ui;
 }
 
 void HomeWindow::openSongPreview(const QModelIndex& index)
@@ -244,17 +265,17 @@ void HomeWindow::openPresenter()
 
 void HomeWindow::on_txtSearch_textChanged(const QString &arg1)
 {
-
+	populateSongSearch(arg1);
 }
 
 void HomeWindow::on_txtSearch_returnPressed()
 {
-
+	populateSongSearch(ui->txtSearch->text());
 }
 
 void HomeWindow::on_cmbSongbooks_currentIndexChanged(int index)
 {
-	if (isReady) populateSonglists(index);
+	if (isReady) populateSongLists(index);
 }
 
 void HomeWindow::on_lstResults_clicked(const QModelIndex &index)
@@ -300,7 +321,7 @@ void HomeWindow::on_menuPresent_triggered()
 
 void HomeWindow::on_menuManageSettings_triggered()
 {
-
+	on_toolbarSettings_triggered();
 }
 
 void HomeWindow::on_menuResetSettings_triggered()
@@ -360,5 +381,11 @@ void HomeWindow::on_toolbarBold_triggered()
 
 void HomeWindow::on_toolbarSettings_triggered()
 {
+    AppOptions preferences(this);
+	preferences.exec();
+}
 
+HomeWindow::~HomeWindow()
+{
+	delete ui;
 }

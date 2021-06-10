@@ -9,7 +9,7 @@ QFont PresentPreview, PresentFont;
 bool isPresentBold, hasChorus;
 QString slide, chorus;
 Song song;
-QIcon iconBold, iconFont, iconSmaller, iconBigger, iconDown, iconUp;
+QIcon iconSmaller, iconBigger, iconDown, iconUp;
 
 PresentorWindow::PresentorWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -89,26 +89,26 @@ void PresentorWindow::loadTheme()
 			break;
 
 		case 7:
-			ui->centralwidget->setStyleSheet("* { background-color: #00FF00; color: #FFFFFF; }");
-			ui->statusBar->setStyleSheet("* { background-color: #00FF00; color: #FFFFFF; }");
+			ui->centralwidget->setStyleSheet("* { background-color: #006400; color: #FFFFFF; }");
+			ui->statusBar->setStyleSheet("* { background-color: #006400; color: #FFFFFF; }");
 			loadButtonIcons(true);
 			break;
 
 		case 8:
-			ui->centralwidget->setStyleSheet("* { background-color: #FFFFFF; color: #00FF00; }");
-			ui->statusBar->setStyleSheet("* { background-color: #FFFFFF; color: #00FF00; }");
+			ui->centralwidget->setStyleSheet("* { background-color: #FFFFFF; color: #006400; }");
+			ui->statusBar->setStyleSheet("* { background-color: #FFFFFF; color: #006400; }");
 			loadButtonIcons(false);
 			break;
 
 		case 9:
-			ui->centralwidget->setStyleSheet("* { background-color: #FFA500; color: #FFFFFF; }");
-			ui->statusBar->setStyleSheet("* { background-color: #FFA500; color: #FFFFFF; }");
+			ui->centralwidget->setStyleSheet("* { background-color: #FFA500; color: #000000; }");
+			ui->statusBar->setStyleSheet("* { background-color: #FFA500; color: #000000; }");
 			loadButtonIcons(true);
 			break;
 
 		case 10:
-			ui->centralwidget->setStyleSheet("* { background-color: #FFFFFF; color: #FFA500; }");
-			ui->statusBar->setStyleSheet("* { background-color: #FFFFFF; color: #FFA500; }");
+			ui->centralwidget->setStyleSheet("* { background-color: #000000; color: #FFA500; }");
+			ui->statusBar->setStyleSheet("* { background-color: #000000; color: #FFA500; }");
 			loadButtonIcons(false);
 			break;
 
@@ -136,12 +136,6 @@ void PresentorWindow::loadTheme()
 			loadButtonIcons(false);
 			break;
 
-		case 15:
-			ui->centralwidget->setStyleSheet("* { background-color: #000000; color: #FFFFFF; }");
-			ui->statusBar->setStyleSheet("* { background-color: #000000; color: #FFFFFF; }");
-			loadButtonIcons(true);
-			break;
-
 		default:
 			ui->centralwidget->setStyleSheet("* { background-color: #000000; color: #FFFFFF; }");
 			ui->statusBar->setStyleSheet("* { background-color: #000000; color: #FFFFFF; }");
@@ -153,8 +147,6 @@ void PresentorWindow::loadTheme()
 
 void PresentorWindow::loadButtonIcons(bool light)
 {
-	iconBold.detach();
-	iconFont.detach();
 	iconSmaller.detach();
 	iconBigger.detach();
 	iconUp.detach();
@@ -162,25 +154,19 @@ void PresentorWindow::loadButtonIcons(bool light)
 
 	if (light)
 	{
-		iconBold.addFile(QString::fromUtf8(":/images/Bold_White.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconFont.addFile(QString::fromUtf8(":/images/Font_White.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconSmaller.addFile(QString::fromUtf8(":/images/Smaller_White.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconBigger.addFile(QString::fromUtf8(":/images/Bigger_White.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconUp.addFile(QString::fromUtf8(":/images/Up_White.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconDown.addFile(QString::fromUtf8(":/images/Down_White.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconSmaller.addFile(QString::fromUtf8(":/images/smaller_white.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconBigger.addFile(QString::fromUtf8(":/images/bigger_white.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconUp.addFile(QString::fromUtf8(":/images/up_white.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconDown.addFile(QString::fromUtf8(":/images/down_white.png"), QSize(), QIcon::Normal, QIcon::Off);
 	}
 	else
 	{
-		iconBold.addFile(QString::fromUtf8(":/images/Bold_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconFont.addFile(QString::fromUtf8(":/images/Font_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconSmaller.addFile(QString::fromUtf8(":/images/Smaller_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconBigger.addFile(QString::fromUtf8(":/images/Bigger_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconUp.addFile(QString::fromUtf8(":/images/Up_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconDown.addFile(QString::fromUtf8(":/images/Down_Black.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconSmaller.addFile(QString::fromUtf8(":/images/smaller_black.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconBigger.addFile(QString::fromUtf8(":/images/Bigger_black.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconUp.addFile(QString::fromUtf8(":/images/up_black.png"), QSize(), QIcon::Normal, QIcon::Off);
+		iconDown.addFile(QString::fromUtf8(":/images/down_black.png"), QSize(), QIcon::Normal, QIcon::Off);
 	}
 
-	ui->btnBold->setIcon(iconBold);
-	ui->btnFont->setIcon(iconFont);
 	ui->btnSmaller->setIcon(iconSmaller);
 	ui->btnBigger->setIcon(iconBigger);
 	ui->btnUp->setIcon(iconUp);

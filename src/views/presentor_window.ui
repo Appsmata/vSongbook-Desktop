@@ -181,11 +181,17 @@
         <layout class="QHBoxLayout" name="layoutBottom">
          <item>
           <widget class="QPushButton" name="btnTheme">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res/images/images.qrc">
+            <iconset>
              <normaloff>:/images/Color.png</normaloff>:/images/Color.png</iconset>
            </property>
            <property name="iconSize">
@@ -198,12 +204,28 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnBold">
-           <property name="text">
-            <string/>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Bold_Black.png</normaloff>:/images/Bold_Black.png</iconset>
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>36</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>B</string>
            </property>
            <property name="iconSize">
             <size>
@@ -215,52 +237,64 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnFont">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Font_Black.png</normaloff>:/images/Font_Black.png</iconset>
-           </property>
-           <property name="iconSize">
+           <property name="minimumSize">
             <size>
              <width>40</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>36</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>F</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnBigger">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Bigger_Black.png</normaloff>:/images/Bigger_Black.png</iconset>
-           </property>
-           <property name="iconSize">
+           <property name="minimumSize">
             <size>
              <width>40</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>36</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>+</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnSmaller">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Smaller_Black.png</normaloff>:/images/Smaller_Black.png</iconset>
-           </property>
-           <property name="iconSize">
+           <property name="minimumSize">
             <size>
              <width>40</width>
              <height>40</height>
             </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Trebuchet MS</family>
+             <pointsize>36</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>-</string>
            </property>
           </widget>
          </item>
@@ -303,7 +337,7 @@
            </property>
            <property name="icon">
             <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Up_Black.png</normaloff>:/images/Up_Black.png</iconset>
+             <normaloff>:/images/up_black.png</normaloff>:/images/up_black.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -320,7 +354,7 @@
            </property>
            <property name="icon">
             <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/Down_Black.png</normaloff>:/images/Down_Black.png</iconset>
+             <normaloff>:/images/down_black.png</normaloff>:/images/down_black.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -396,7 +430,7 @@
   </action>
   <action name="actionTheme">
    <property name="text">
-    <string> </string>
+    <string/>
    </property>
    <property name="shortcut">
     <string>T</string>

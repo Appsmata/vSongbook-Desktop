@@ -13,18 +13,21 @@ CONFIG += c++11
 SOURCES += \
     data/app_database.cpp \
     data/delegates/book_delegate.cpp \
-    data/delegates/list_delegate.cpp \
+    data/delegates/pref_delegate.cpp \
     data/delegates/song_delegate.cpp \
-    dialogs/app_options.cpp \
-    dialogs/book_select.cpp \
     main.cpp \
+    views/dialogs/app_about.cpp \
+    views/dialogs/app_hints.cpp \
+    views/dialogs/app_options.cpp \
+    views/dialogs/book_select.cpp \
+    views/dialogs/how_it_works.cpp \
     views/home_window.cpp \
     views/presentor_window.cpp
 
 HEADERS += \
     data/app_database.h \
     data/delegates/book_delegate.h \
-    data/delegates/list_delegate.h \
+    data/delegates/pref_delegate.h \
     data/delegates/song_delegate.h \
     data/models/book.h \
     data/models/history.h \
@@ -32,8 +35,6 @@ HEADERS += \
     data/models/preference.h \
     data/models/search.h \
     data/models/song.h \
-    dialogs/app_options.h \
-    dialogs/book_select.h \
     services/app_preferences.h \
     services/exception.h \
     services/task.h \
@@ -41,12 +42,20 @@ HEADERS += \
     utils/app_utils.h \
     utils/database_utils.h \
     utils/preferences_utils.h \
+    views/dialogs/app_about.h \
+    views/dialogs/app_hints.h \
+    views/dialogs/app_options.h \
+    views/dialogs/book_select.h \
+    views/dialogs/how_it_works.h \
     views/home_window.h \
     views/presentor_window.h
 
 FORMS += \
-    dialogs/app_options.ui \
-    dialogs/book_select.ui \
+    views/dialogs/app_about.ui \
+    views/dialogs/app_hints.ui \
+    views/dialogs/app_options.ui \
+    views/dialogs/book_select.ui \
+    views/dialogs/how_it_works.ui \
     views/home_window.ui \
     views/presentor_window.ui
 

@@ -5,8 +5,10 @@
 
 struct Preference {
     int preferenceid;
+    int category;
     QString title;
     QString content;
+    QString key;
     QString created;
     QString updated;
 };

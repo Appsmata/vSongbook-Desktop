@@ -30,7 +30,8 @@ private slots:
     void fontBold();
 
     bool populateSongbooks();
-    void populateSonglists(int book);
+    void populateSongLists(size_t book);
+    void populateSongSearch(QString SearchStr);
     void filterSonglists();
     void openSongPreview(const QModelIndex& selected);
 
