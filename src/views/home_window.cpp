@@ -10,6 +10,8 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QMessageBox>
+#include <QFile>
+#include <QGraphicsDropShadowEffect>
 
 #include "home_window.h"
 #include "ui_home_window.h"

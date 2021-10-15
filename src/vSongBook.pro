@@ -72,4 +72,5 @@ DISTFILES += \
 
 RESOURCES += \
     res/icons/icons.qrc \
-    res/images/images.qrc
+    res/images/images.qrc \
+    res/styles/styles.qrc

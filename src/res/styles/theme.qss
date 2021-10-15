@@ -1,0 +1,209 @@
+
+* {
+    border: 0px;
+}
+
+/* QTabWidget */
+
+QTabWidget#tabLeft {
+    background-color: #3D4457;
+    padding: 20px;
+}
+
+/* QGroupBox */
+
+QGroupBox#grpPanel1 {
+    background-color: QLinearGradient( spread:pad, x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #393D66, stop: 1 #1E2433);
+}
+
+QGroupBox#grpTab2Panel1 {
+    background-color: #4D5167;
+}
+
+/* QLabel */
+
+QLabel {
+    background-color: transparent;
+}
+
+QLabel#lblLogoTitle {
+    padding: 20px;
+}
+
+/* QTabBar */
+
+QTabBar::tab{
+    width: 0px;
+    height: 0px;
+}
+
+/* QPushButton */
+
+QPushButton#btnWallet, QPushButton#btnBuyCrypto, QPushButton#btnSettings {
+    text-align:left;
+    padding: 4px 22px;
+    background-color: transparent;
+}
+
+QPushButton#btnWallet:hover, QPushButton#btnBuyCrypto:hover, QPushButton#btnSettings:hover {
+    background-color: QLinearGradient( spread:pad, x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #393D66, stop: 1 #3D4457);
+}
+
+QPushButton#btnAddWallet {
+    margin: 10px 30px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    height: 20px;
+    background-color: #1E2433;
+}
+
+QPushButton#btnAddWallet:hover {
+    background-color: #393D66;
+}
+
+QPushButton#btnReceive1, QPushButton#btnSend1, QPushButton#btnBuy1 {
+    width: 100px;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    height: 20px;
+    background-color: QLinearGradient( spread:pad, x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #8858FE, stop: 1 #8457FE);
+}
+
+QPushButton#btnReceive1:hover, QPushButton#btnSend1:hover, QPushButton#btnBuy1:hover {
+    background-color: #1E2433;
+}
+
+QPushButton#btnLoadMore {
+    width: 250px;
+    border: 3px solid #1E2433;
+    margin: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+QPushButton#btnLoadMore:hover, QPushButton#btnMessage:hover, QPushButton#btnMenu1:hover {
+    border: 3px solid #FFFFFF;
+}
+
+QPushButton#btnMessage {
+    padding: 10px;
+    height: 20px;
+    background-color: #1E2433;
+}
+
+/* QListView */
+
+QListView, QScrollArea{
+    background-color: transparent;
+}
+
+/* QScrollBar */
+
+QScrollBar:horizontal {
+    background: #B5B5B5;
+    padding: 0px;
+    border-radius: 0px;
+    height: 12px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #9C9C9C;
+    border-radius: 0px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #4F4F4F;
+}
+
+QScrollBar::handle:horizontal:pressed {
+    background: #4F4F4F;
+}
+
+QScrollBar::add-page:horizontal {
+    background: none;
+}
+
+QScrollBar::sub-page:horizontal {
+    background: none;
+}
+
+QScrollBar::add-line:horizontal {
+    background: transparent;
+    image: url(:/add_right.png);
+}
+
+QScrollBar::add-line:horizontal:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #808080, stop:1 #646464);
+}
+
+QScrollBar::sub-line:horizontal {
+    background: transparent;
+    image: url(:/add_left.png);
+}
+
+QScrollBar::sub-line:horizontal:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #808080, stop:1 #646464);
+}
+
+QScrollBar:vertical {
+    background: #B5B5B5;
+    padding: 0px;
+    border-radius: 0px;
+    width: 12px;
+}
+
+QScrollBar::handle:vertical {
+    background: #9C9C9C;
+    border-radius: 0px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #4F4F4F;
+}
+
+QScrollBar::handle:vertical:pressed {
+    background: #4F4F4F;
+}
+
+QScrollBar::up-arrow:vertical {
+    width: 12px;
+    height: 12px;
+    background: none;
+}
+
+QScrollBar::down-arrow:vertical {
+    width: 12px;
+    height: 12px;
+    background: none;
+}
+
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollBar::add-page:vertical {
+    background: none;
+}
+
+QScrollBar::add-line:vertical {
+    background: transparent;
+    image: url(:/add_bottom.png);
+}
+
+QScrollBar::sub-line:vertical {
+    background: transparent;
+    image: url(:/add_top.png);
+}
+
+QScrollBar::add-line:vertical:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #808080, stop:1 #646464);
+}
+
+QScrollBar::sub-line:vertical:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #808080, stop:1 #646464);
+}

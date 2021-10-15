@@ -7,6 +7,7 @@ src/release/
 src/ui_*.h
 build/
 build-*
+build_*
 snap/parts
 snap/prime
 snap/snap

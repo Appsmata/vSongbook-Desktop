@@ -6,10 +6,10 @@
 !define APP_NAME "vSongBook"
 !define COMP_NAME "AppSmata Solutions"
 !define WEB_SITE "http://Appsmata.com/vSongBook"
-!define VERSION "3.0.1.5"
+!define VERSION "3.0.2.0"
 !define COPYRIGHT "© AppSmata Solutions 2016 - 2021"
 !define DESCRIPTION "${APP_NAME}"
-!define INSTALLER_NAME "\outputs\${APP_NAME}_${VERSION}_x64.exe"
+!define INSTALLER_NAME "outputs\${APP_NAME}_${VERSION}_x64.exe"
 !define MAIN_APP_EXE "vSongBook.exe"
 !define INSTALL_TYPE "SetShellVarContext current"
 !define REG_ROOT "HKCU"
@@ -41,6 +41,7 @@ InstallDir "$LOCALAPPDATA\AppSmata\vSongBook"
 !include "MUI.nsh"
 
 !define MUI_ICON "appicon.ico"
+!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 !define MUI_ABORTWARNING
 !define MUI_UNABORTWARNING
@@ -88,11 +89,12 @@ SetOutPath "$INSTDIR"
 File "x64\Qt5Core.dll"
 File "x64\Qt5Gui.dll"
 File "x64\Qt5Network.dll"
+File "x64\Qt5Sql.dll"
 File "x64\Qt5Widgets.dll"
 File "x64\vSongBook.exe"
-File "vc_redist.x64.exe"
+File "x64\vc_redist.x64.exe"
 SetOutPath "$INSTDIR\data"
-File "x64\data\vSongBookApp.db"
+File "data\vSongBookApp.db"
 SetOutPath "$INSTDIR\platforms"
 File "x64\platforms\qwindows.dll"
 SetOutPath "$INSTDIR\res\icons"
@@ -108,7 +110,7 @@ SetOutPath "$INSTDIR\styles"
 File "x64\styles\qwindowsvistastyle.dll"
         
 DetailPrint "Installing Visual C++ 2015 Redistributable (x64)"     
-File "vc_redist.x64.exe" 
+File "x64\vc_redist.x64.exe" 
 ExecWait "$INSTDIR\vc_redist.x64.exe /q"         
 DetailPrint "Cleaning up"         
 Delete "$INSTDIR\vc_redist.x64.exe"
@@ -159,7 +161,16 @@ WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "URLInfoAbout" "${WEB_SITE}"
 !endif
 SectionEnd
 
-######################################################################
+
+Function un.onUninstSuccess
+  HideWindow
+  MessageBox MB_ICONINFORMATION|MB_OK "${APP_NAME} was successfully removed from your computer."
+FunctionEnd
+
+Function un.onInit
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove ${APP_NAME} and all of its components?" IDYES +2
+  Abort
+FunctionEnd
 
 Section Uninstall
 ${INSTALL_TYPE} 
