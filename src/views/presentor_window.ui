@@ -26,7 +26,7 @@
     <item>
      <widget class="QGroupBox" name="grpMain">
       <property name="title">
-       <string>vSongBook for Desktop v 2.6.1</string>
+       <string>vSongBook for Desktop</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -336,8 +336,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/up_black.png</normaloff>:/images/up_black.png</iconset>
+            <iconset resource="../res/images.qrc">
+             <normaloff>:/images/images/up_white.png</normaloff>:/images/images/up_white.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -353,8 +353,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../res/images/images.qrc">
-             <normaloff>:/images/down_black.png</normaloff>:/images/down_black.png</iconset>
+            <iconset resource="../res/images.qrc">
+             <normaloff>:/images/images/down_white.png</normaloff>:/images/images/down_white.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -438,7 +438,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../res/images/images.qrc"/>
+  <include location="../res/images.qrc"/>
  </resources>
  <connections/>
 </ui>

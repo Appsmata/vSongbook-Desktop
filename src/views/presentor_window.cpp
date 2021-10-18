@@ -17,6 +17,8 @@ PresentorWindow::PresentorWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->grpMain->setTitle("vSongBook for Desktop v3.0.2");
+
 	setUpStuff();
     loadSettings();
     loadControls();
@@ -32,8 +34,12 @@ void PresentorWindow::setUpStuff()
 {
 
 	if (!prefTabletMode::get())
-	{
-		ui->btnClose->hide();
+    {
+        ui->btnClose->hide();
+        ui->btnBigger->hide();
+        ui->btnSmaller->hide();
+        ui->btnFont->hide();
+        ui->btnBold->hide();
 	}
 }
 
@@ -162,15 +168,15 @@ void PresentorWindow::loadButtonIcons(bool light)
 	else
 	{
 		iconSmaller.addFile(QString::fromUtf8(":/images/smaller_black.png"), QSize(), QIcon::Normal, QIcon::Off);
-		iconBigger.addFile(QString::fromUtf8(":/images/Bigger_black.png"), QSize(), QIcon::Normal, QIcon::Off);
+        iconBigger.addFile(QString::fromUtf8(":/images/bigger_black.png"), QSize(), QIcon::Normal, QIcon::Off);
 		iconUp.addFile(QString::fromUtf8(":/images/up_black.png"), QSize(), QIcon::Normal, QIcon::Off);
 		iconDown.addFile(QString::fromUtf8(":/images/down_black.png"), QSize(), QIcon::Normal, QIcon::Off);
 	}
 
 	ui->btnSmaller->setIcon(iconSmaller);
 	ui->btnBigger->setIcon(iconBigger);
-	ui->btnUp->setIcon(iconUp);
-	ui->btnDown->setIcon(iconDown);
+    //ui->btnUp->setIcon(iconUp);
+    //ui->btnDown->setIcon(iconDown);
 }
 
 void PresentorWindow::loadControls()
@@ -247,12 +253,18 @@ void PresentorWindow::setPresentation()
 	slide = songverses2[slideIndex];
 	ui->lblTitle->setText(AppUtils::replaceView(QString::number(song.number) + "# " + song.title));
 	ui->lblContent->setText(AppUtils::replaceView(slide));
-	ui->lblAuthor->setText(song.author);
-	ui->lblKey->setText("Key: " + song.key);
+    if (song.author.size() < 2)
+        ui->lblAuthor->setText("Public Domain");
+    else
+        ui->lblAuthor->setText(song.author);
+    if (song.key.size() != 0)
+        ui->lblKey->setText("Key: " + song.key);
+    else
+        ui->lblKey->setText("");
 	ui->lblSongbook->setText(song.book);
 	ui->lblVerse->setText(labels[slideIndex]);
 
-	if (slideIndex == 0)
+    if (slideIndex == 0)
 	{
 		ui->btnUp->hide();
 		ui->btnDown->show();
@@ -268,7 +280,7 @@ void PresentorWindow::setPresentation()
 	{
 		ui->btnUp->show();
 		ui->btnDown->show();
-	}
+    }
 }
 
 void PresentorWindow::themeChange()
@@ -311,8 +323,7 @@ void PresentorWindow::fontSmaller()
 {
 	if ((fontSizePresent - 2) > 9)
 	{
-		fontSizePresent = fontSizePresent - 2;
-		PresentFont.setPointSize(fontSizePresent);
+        fontSizePresent = fontSizePresent - 2;
 		prefPresentFontSize::set(fontSizePresent);
 		loadSettings();
 		loadControls();

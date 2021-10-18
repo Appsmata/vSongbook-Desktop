@@ -32,7 +32,7 @@
    <string>vSongBook Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../res/icons/icons.qrc">
+   <iconset>
     <normaloff>:/icons/appicon.ico</normaloff>:/icons/appicon.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="itemsLayout">
@@ -161,8 +161,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>648</width>
-          <height>1728</height>
+          <width>651</width>
+          <height>1735</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="scrollLayout">
@@ -177,7 +177,7 @@
            <property name="font">
             <font>
              <family>Trebuchet MS</family>
-             <pointsize>14</pointsize>
+             <pointsize>12</pointsize>
             </font>
            </property>
            <property name="title">
@@ -191,6 +191,12 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>Trebuchet MS</family>
+                <pointsize>12</pointsize>
+               </font>
               </property>
               <property name="text">
                <string>Enable touchscreen mode</string>
@@ -907,8 +913,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../res/icons/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

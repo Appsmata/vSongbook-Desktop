@@ -7,6 +7,7 @@
 
 #include "song_delegate.h"
 #include <data/models/song.h>
+#include <utils/app_utils.h>
 
 SongDelegate::SongDelegate(QObject* parent) : QStyledItemDelegate(parent) { }
 
@@ -64,11 +65,11 @@ void SongDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, 
 
 		painter->setPen(QPen(QColor(Qt::black)));
 		painter->setFont(QFont("Trebuchet MS", 14, QFont::Bold));
-		painter->drawText(itemText1, QString::number(song.number) + ". " + song.title);
+        painter->drawText(itemText1, AppUtils::replaceView(QString::number(song.number) + ". " + song.title));
 
 		painter->setPen(QPen(Qt::black));
 		painter->setFont(QFont("Trebuchet MS", 12, 0));
-		painter->drawText(itemText2, song.content.replace("\\n", " "));
+        painter->drawText(itemText2, AppUtils::replaceView(song.content));
 
 		painter->restore();
 	}

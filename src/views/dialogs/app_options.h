@@ -20,7 +20,9 @@ public:
 private slots:
     void setupStuff();
     void loadNavigation();
-    void loadPreferences(int page, QString searchstr);
+    void loadControls();
+    void loadSettings();
+    void loadPrefItems(int page, QString searchstr);
     
     void on_lstNavigation_clicked(const QModelIndex &index);
     void on_lstNavigation_doubleClicked(const QModelIndex &index);

@@ -23,11 +23,11 @@
 #include <services/app_preferences.h>
 
 int fontSizePreview, fontSizePreviewType, selectedbook;
-bool isReady, searchAll, isDarkMode, isPreviewBold;
+bool isReady, isEditMode, isSearchAll, isDarkMode, isPreviewBold;
 QString selected_book, selected_song, search_term;
 std::vector<Book> books;
 std::vector<Song> songs, filters;
-QFont HomeFontPreview, HomeFontGeneral;
+QFont homeFontPreview, homeFontGeneral;
 QStandardItemModel* songModel = new QStandardItemModel();
 
 HomeWindow::HomeWindow(QWidget *parent) :
@@ -37,11 +37,34 @@ HomeWindow::HomeWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->SplitterMain->setStretchFactor(1, 3);
 
-	this->setWindowTitle("vSongBook v3.0.1 | " + prefAppUser::get());
+	this->setWindowTitle("vSongBook v3.0.2 | " + prefAppUser::get());
 
 	loadSettings();
 	loadControls();
 	requestData();
+}
+
+void HomeWindow::changeStyle(int type)
+{
+    QString fileName = "";
+    switch ( type )
+    {
+        case 1:
+            fileName = "black.qss";
+            break;
+        default:
+            fileName = "brown.qss";
+            break;
+    }
+
+    QFile file(":/themes/"+ fileName);
+
+    if ( file.open(QFile::ReadOnly) )
+    {
+        QString qss = QLatin1String(file.readAll());
+        this->setStyleSheet(qss);
+        file.close();
+    }
 }
 
 void HomeWindow::requestData()
@@ -76,34 +99,42 @@ void HomeWindow::requestData()
 
 void HomeWindow::loadSettings()
 {
-	fontSizePreviewType = prefPreviewFontType::get();
+    isDarkMode = prefDarkMode::get();
+    isEditMode = prefEditMode::get();
+    isSearchAll = prefSearchAllbooks::get();
+
+    isPreviewBold = prefPreviewFontBold::get();
 	fontSizePreview = prefPreviewFontSize::get();
+    fontSizePreviewType = prefPreviewFontType::get();
 
-	HomeFontGeneral.setFamily(PrefUtils::preferencesFontTypes()[prefGeneralFontType::get()]);
-	HomeFontGeneral.setPointSize(prefGeneralFontSize::get());
-	HomeFontGeneral.setBold(prefGeneralFontBold::get());
-	HomeFontGeneral.setWeight(50);
+    homeFontGeneral.setFamily(PrefUtils::preferencesFontTypes()[prefGeneralFontType::get()]);
+    homeFontGeneral.setPointSize(prefGeneralFontSize::get());
+    homeFontGeneral.setBold(prefGeneralFontBold::get());
+    //homeFontGeneral.setWeight(50);
 
-	HomeFontPreview.setFamily(PrefUtils::preferencesFontTypes()[fontSizePreviewType]);
-	HomeFontPreview.setPointSize(prefPreviewFontSize::get());
-	HomeFontPreview.setBold(prefPreviewFontBold::get());
-	HomeFontPreview.setWeight(50);
+    homeFontPreview.setFamily(PrefUtils::preferencesFontTypes()[fontSizePreviewType]);
+    homeFontPreview.setPointSize(prefPreviewFontSize::get());
+    homeFontPreview.setBold(prefPreviewFontBold::get());
+    //homeFontPreview.setWeight(50);
 }
 
 void HomeWindow::loadControls()
 {
-	//ui->chkSearchCriteria->setChecked(searchAll);
-	//ui->actionSearchAll->setChecked(searchAll);
-	//ui->ChkDarkMode->setChecked(isDarkMode);
-	//ui->actionDarkMode->setChecked(isDarkMode);
+    ui->chkSearchCriteria->setChecked(isSearchAll);
+    ui->menuSearchAll->setChecked(isSearchAll);
+    ui->actionDarkMode->setChecked(isDarkMode);
+    ui->menuDarkMode->setChecked(isDarkMode);
 
-	ui->txtSearch->setFont(HomeFontGeneral);
-	ui->cmbSongbooks->setFont(HomeFontGeneral);
-	ui->chkSearchCriteria->setFont(HomeFontGeneral);
+    ui->txtSearch->setFont(homeFontGeneral);
+    ui->cmbSongbooks->setFont(homeFontGeneral);
+    ui->chkSearchCriteria->setFont(homeFontGeneral);
 
-	ui->txtTitle->setFont(HomeFontPreview);
-	ui->txtContent->setFont(HomeFontPreview);
-	ui->txtAlias->setFont(HomeFontPreview);
+    ui->txtTitle->setFont(homeFontPreview);
+    ui->txtContent->setFont(homeFontPreview);
+    ui->txtAlias->setFont(homeFontPreview);
+
+    if (isDarkMode) changeStyle(1);
+    else changeStyle(0);
 }
 
 // Changing of font of the song preview
@@ -120,6 +151,7 @@ void HomeWindow::fontChange()
 		break;
 	}
 	prefPresentFontType::set(fontSizePreviewType);
+    loadSettings();
 	loadControls();
 }
 
@@ -129,8 +161,9 @@ void HomeWindow::fontSmaller()
 	if ((fontSizePreview - 2) > 9)
 	{
 		fontSizePreview = fontSizePreview - 2;
-		HomeFontPreview.setPointSize(fontSizePreview);
+        homeFontPreview.setPointSize(fontSizePreview);
 		prefPreviewFontSize::set(fontSizePreview);
+        loadSettings();
 		loadControls();
 	}
 }
@@ -141,16 +174,9 @@ void HomeWindow::fontBigger()
 	{
 		fontSizePreview = fontSizePreview + 2;
 		prefPreviewFontSize::set(fontSizePreview);
+        loadSettings();
 		loadControls();
 	}
-}
-
-void HomeWindow::fontBold()
-{
-	if (isPreviewBold) isPreviewBold = false;
-	else isPreviewBold = true;
-	prefPreviewFontBold::set(isPreviewBold);
-	loadControls();
 }
 
 bool HomeWindow::populateSongbooks()
@@ -203,23 +229,46 @@ void HomeWindow::populateSongSearch(QString SearchStr)
 	{
 		if (songs.size() != 0)
 		{
-
 			filters.clear();
 			songModel->clear();
 
-			for (size_t i = 0; i < songs.size(); i++)
-			{
-				if (songs[i].title.contains(SearchStr) || songs[i].alias.contains(SearchStr) || songs[i].content.contains(SearchStr))
-				{
-					filters.push_back(songs[i]);
-					QStandardItem* songItem = new QStandardItem;
-					songItem->setData(QVariant::fromValue(songs[i]), Qt::UserRole + 1);
-					songModel->appendRow(songItem);
-				}
-			}
+            if (SearchStr.size() < 5)
+            {
+                if (SearchStr.toInt() != 0)
+                {
+                    for (size_t i = 0; i < songs.size(); i++)
+                    {
+                        if (songs[i].number == SearchStr.toInt())
+                        {
+                            filters.push_back(songs[i]);
+                            QStandardItem* songItem = new QStandardItem;
+                            songItem->setData(QVariant::fromValue(songs[i]), Qt::UserRole + 1);
+                            songModel->appendRow(songItem);
+                        }
+                    }
+                }
+                else searchSonglists(SearchStr);
+            }
+            else searchSonglists(SearchStr);
 			filterSonglists();
 		}
 	}
+}
+
+void HomeWindow::searchSonglists(QString SearchStr)
+{
+    for (size_t i = 0; i < songs.size(); i++)
+    {
+        if (songs[i].title.toLower().contains(SearchStr.toLower()) ||
+                songs[i].alias.toLower().contains(SearchStr.toLower()) ||
+                songs[i].content.toLower().contains(SearchStr.toLower()))
+        {
+            filters.push_back(songs[i]);
+            QStandardItem* songItem = new QStandardItem;
+            songItem->setData(QVariant::fromValue(songs[i]), Qt::UserRole + 1);
+            songModel->appendRow(songItem);
+        }
+    }
 }
 
 void HomeWindow::filterSonglists()
@@ -366,19 +415,26 @@ void HomeWindow::on_toolbarNext_triggered()
 
 }
 
-void HomeWindow::on_toolbarBigger_triggered()
-{
-
-}
-
 void HomeWindow::on_toolbarSmaller_triggered()
 {
-
+    if ((fontSizePreview - 2) > 9)
+    {
+        fontSizePreview = fontSizePreview - 2;
+        prefPresentFontSize::set(fontSizePreview);
+        loadSettings();
+        loadControls();
+    }
 }
 
-void HomeWindow::on_toolbarBold_triggered()
+void HomeWindow::on_toolbarBigger_triggered()
 {
-
+    if ((fontSizePreview + 2) < 51)
+    {
+        fontSizePreview = fontSizePreview + 2;
+        prefPresentFontSize::set(fontSizePreview);
+        loadSettings();
+        loadControls();
+    }
 }
 
 void HomeWindow::on_toolbarSettings_triggered()
@@ -387,7 +443,54 @@ void HomeWindow::on_toolbarSettings_triggered()
 	preferences.exec();
 }
 
+void HomeWindow::on_toolbarBold_triggered()
+{
+    if (ui->toolbarBold->isChecked())isPreviewBold = false;
+    else isPreviewBold = true;
+    prefPreviewFontBold::set(isPreviewBold);
+    loadSettings();
+    loadControls();
+}
+
+void HomeWindow::on_menuDarkMode_triggered()
+{
+    if (ui->menuDarkMode->isChecked())isDarkMode = false;
+    else isDarkMode = true;
+    prefDarkMode::set(isDarkMode);
+    loadSettings();
+    loadControls();
+}
+
+
+void HomeWindow::on_actionDarkMode_triggered()
+{
+    if (ui->actionDarkMode->isChecked())isDarkMode = false;
+    else isDarkMode = true;
+    prefDarkMode::set(isDarkMode);
+    loadSettings();
+    loadControls();
+}
+
+void HomeWindow::on_chkSearchCriteria_stateChanged(int value)
+{
+    if (value == 1) isSearchAll = true;
+    else isSearchAll = false;
+    prefSearchAllbooks::set(isSearchAll);
+    loadSettings();
+    loadControls();
+}
+
+void HomeWindow::on_menuSearchAll_triggered()
+{
+    if (ui->menuSearchAll->isChecked())isSearchAll = false;
+    else isSearchAll = true;
+    prefSearchAllbooks::set(isSearchAll);
+    loadSettings();
+    loadControls();
+}
+
 HomeWindow::~HomeWindow()
 {
-	delete ui;
+    delete ui;
 }
+

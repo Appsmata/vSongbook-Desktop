@@ -4,7 +4,7 @@
 #include <QGroupBox>
 #include <QComboBox>
 #include <QRadioButton>
-#include <QScrollArea>
+#include <QscrollArea>
 #include <QPushButton>
 #include <QSlider>
 
@@ -12,17 +12,20 @@
 #include "ui_app_options.h"
 #include <data/models/preference.h>
 #include <data/delegates/pref_delegate.h>
+#include <services/app_preferences.h>
 #include <utils/preferences_utils.h>
 
 int fontgeneral, fontpreview, fontpresent;
 std::vector<QString> languages, pref_sets, navigations, pref_fonts;
-QFont PrefFontGeneral, PrefFontPreview, PrefFontPresent, Font1, Font2;
+QFont prefFontGeneral, prefFontPreview, prefFontPresent, Font1, Font2;
+
+bool enableEditMode, enableTabletMode, enableDarkMode, enableSearchAll;
 
 PrefDelegate* prefDelegate;
 Preference* preference;
-QScrollArea* ScrollArea;
-QWidget* ScrollPane;
-QVBoxLayout* LstSettings;
+QScrollArea* scrollArea;
+QWidget* scrollPane;
+QVBoxLayout* lstSettings;
 std::vector<Preference> pages, prefs, filtered;
 QStandardItemModel* prefModel = new QStandardItemModel();
 
@@ -33,6 +36,7 @@ AppOptions::AppOptions(QWidget *parent) :
     ui->setupUi(this);
     
     setupStuff();
+    loadControls();
     loadNavigation();
 }
 
@@ -106,12 +110,12 @@ void AppOptions::loadNavigation()
         ui->lstNavigation->setModel(prefModel);
         ui->lstNavigation->setSpacing(1);
         ui->lstNavigation->setCurrentIndex(prefModel->index(0, 0));
-        loadPreferences(1, "");
+        loadPrefItems(1, "");
     }
 
 }
 
-void AppOptions::loadPreferences(int page, QString searchStr)
+void AppOptions::loadPrefItems(int page, QString searchStr)
 {
     if (prefs.size() != 0)
     {
@@ -213,6 +217,47 @@ void AppOptions::loadPreferences(int page, QString searchStr)
         }
     }
 
+}
+
+void AppOptions::loadSettings()
+{
+    enableDarkMode = prefDarkMode::get();
+    enableEditMode = prefEditMode::get();
+    enableTabletMode = prefTabletMode::get();
+    enableSearchAll = prefSearchAllbooks::get();
+
+    isPreviewBold = prefPreviewFontBold::get();
+    fontSizePreview = prefPreviewFontSize::get();
+    fontSizePreviewType = prefPreviewFontType::get();
+
+    HomeFontGeneral.setFamily(PrefUtils::preferencesFontTypes()[prefGeneralFontType::get()]);
+    HomeFontGeneral.setPointSize(prefGeneralFontSize::get());
+    HomeFontGeneral.setBold(prefGeneralFontBold::get());
+    //HomeFontGeneral.setWeight(50);
+
+    HomeFontPreview.setFamily(PrefUtils::preferencesFontTypes()[fontSizePreviewType]);
+    HomeFontPreview.setPointSize(prefPreviewFontSize::get());
+    HomeFontPreview.setBold(prefPreviewFontBold::get());
+    //HomeFontPreview.setWeight(50);
+}
+
+void AppOptions::loadControls()
+{
+    ui->chkSearchCriteria->setChecked(canSearchAll);
+    ui->menuSearchAll->setChecked(canSearchAll);
+    ui->actionDarkMode->setChecked(isDarkMode);
+    ui->menuDarkMode->setChecked(isDarkMode);
+
+    ui->txtSearch->setFont(HomeFontGeneral);
+    ui->cmbSongbooks->setFont(HomeFontGeneral);
+    ui->chkSearchCriteria->setFont(HomeFontGeneral);
+
+    ui->txtTitle->setFont(HomeFontPreview);
+    ui->txtContent->setFont(HomeFontPreview);
+    ui->txtAlias->setFont(HomeFontPreview);
+
+    if (isDarkMode) changeStyle(1);
+    else changeStyle(0);
 }
 
 void AppOptions::on_lstNavigation_clicked(const QModelIndex &index)

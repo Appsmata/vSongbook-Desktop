@@ -18,6 +18,7 @@ public:
     AppDatabase* appDb = new AppDatabase();
     explicit HomeWindow(QWidget *parent = nullptr);
     void requestData();
+    void changeStyle(int type);
     ~HomeWindow();
 
 private slots:
@@ -27,19 +28,18 @@ private slots:
     void fontChange();
     void fontSmaller();
     void fontBigger();
-    void fontBold();
 
     bool populateSongbooks();
     void populateSongLists(size_t book);
     void populateSongSearch(QString SearchStr);
+    void searchSonglists(QString SearchStr);
     void filterSonglists();
+
     void openSongPreview(const QModelIndex& selected);
 
     void on_txtSearch_textChanged(const QString &arg1);
     void on_txtSearch_returnPressed();
-
     void on_cmbSongbooks_currentIndexChanged(int index);
-
     void on_lstResults_clicked(const QModelIndex &index);
     void on_lstResults_doubleClicked(const QModelIndex &index);
 
@@ -63,6 +63,10 @@ private slots:
     void on_toolbarSmaller_triggered();
     void on_toolbarBold_triggered();
     void on_toolbarSettings_triggered();
+    void on_menuDarkMode_triggered();
+    void on_actionDarkMode_triggered();
+    void on_menuSearchAll_triggered();
+    void on_chkSearchCriteria_stateChanged(int arg1);
 
     void openPresenter();
 

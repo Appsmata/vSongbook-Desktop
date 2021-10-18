@@ -71,6 +71,6 @@ DISTFILES += \
     langs/vSongBook_en_GB.ts
 
 RESOURCES += \
-    res/icons/icons.qrc \
-    res/images/images.qrc \
-    res/styles/styles.qrc
+    res/icons.qrc \
+    res/images.qrc \
+    res/themes.qrc
