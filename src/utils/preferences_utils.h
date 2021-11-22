@@ -1,5 +1,5 @@
 #include <QtCore>
-#include <data/models/preference.h>
+#include "../data/models/preference.h"
 
 class PrefUtils
 {

@@ -3,8 +3,8 @@
 #include <QDateTime>
 
 #include "app_database.h"
-#include <utils/database_utils.h>
-#include <utils/preferences_utils.h>
+#include "../utils/database_utils.h"
+#include "../utils/preferences_utils.h"
 
 AppDatabase::AppDatabase()
 {

@@ -6,8 +6,8 @@
 #include <QDebug>
 
 #include "song_delegate.h"
-#include <data/models/song.h>
-#include <utils/app_utils.h>
+#include "../data/models/song.h"
+#include "../utils/app_utils.h"
 
 SongDelegate::SongDelegate(QObject* parent) : QStyledItemDelegate(parent) { }
 

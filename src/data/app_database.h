@@ -8,8 +8,8 @@
 #include <QSqlRecord>
 #include <QStandardItemModel>
 
-#include "data/models/book.h"
-#include "data/models/song.h"
+#include "models/book.h"
+#include "models/song.h"
 
 // Application Database
 class AppDatabase : public QObject

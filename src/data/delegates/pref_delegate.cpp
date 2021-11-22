@@ -6,7 +6,7 @@
 #include <QDebug>
 
 #include "pref_delegate.h"
-#include <data/models/preference.h>
+#include "../data/models/preference.h"
 
 PrefDelegate::PrefDelegate(QObject* parent) : QStyledItemDelegate(parent) { }
 
