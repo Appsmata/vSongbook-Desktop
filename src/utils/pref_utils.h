@@ -1,33 +1,47 @@
 #include <QtCore>
+
+#include "app_utils.h"
 #include "../data/models/preference.h"
 
 class PrefUtils
 {
 public:
-    static QString preferencesAppUser() { return "preferences_app_user"; }
-    static QString preferencesDarkMode() { return "preferences_dark_mode"; }
-    static QString preferencesEditMode() { return "preferences_edit_mode"; }
-    static QString preferencesGeneralFontBold() { return "preferences_general_font_bold"; }
-    static QString preferencesGeneralFontSize() { return "preferences_general_font_size"; }
-    static QString preferencesGeneralFontType() { return "preferences_general_font_type"; }
-    static QString preferencesInstalledDate() { return "preferences_installed_date"; }
-    static QString preferencesLanguage() { return "preferences_language"; }
-    static QString preferencesLastWindowStartup() { return "preferences_last_window_startup"; }
-    static QString preferencesLastWindowWidth() { return "preferences_last_window_width"; }
-    static QString preferencesListFontBold() { return "preferences_list_font_bold"; }
-    static QString preferencesPresentFontBold() { return "preferences_present_font_bold"; }
-    static QString preferencesPresentFontSize() { return "preferences_present_font_size"; }
-    static QString preferencesPresentFontType() { return "preferences_present_font_type"; }
-    static QString preferencesPreviewFontBold() { return "preferences_preview_font_bold"; }
-    static QString preferencesPreviewFontSize() { return "preferences_preview_font_size"; }
-    static QString preferencesPreviewFontType() { return "preferences_preview_font_type"; }
-    static QString preferencesSearchAllbooks() { return "preferences_search_all_books"; }
-    static QString preferencesSelectedBook() { return "preferences_selected_book"; }
-    static QString preferencesSelectedSong() { return "preferences_selected_song"; }
-    static QString preferencesShowHelpFirst() { return "preferences_show_help_first"; }
-    static QString preferencesShowStartpage() { return "preferences_show_startpage"; }
-    static QString preferencesTabletMode() { return "preferences_tablet_mode"; }
-    static QString preferencesTheme() { return "preferences_theme"; }
+    static QString prefsAppUser() { return "general/app_user"; }
+    static QString prefsDarkMode() { return "general/dark_mode"; }
+    static QString prefsEditMode() { return "general/edit_mode"; }
+    static QString prefsFirstInstall() { return "general/first_install"; }
+    static QString prefsGeneralFontBold() { return "general/font_bold"; }
+    static QString prefsGeneralFontSize() { return "general/font_size"; }
+    static QString prefsGeneralFontType() { return "general/font_type"; }
+    static QString prefsInstalledDate() { return "general/installed_date"; }
+    static QString prefsLanguage() { return "general/app_language"; }
+    static QString prefsLastWindowStartup() { return "general/last_window_startup"; }
+    static QString prefsLastWindowWidth() { return "general/last_window_width"; }
+    static QString prefsListFontBold() { return "general/list_font_bold"; }
+    static QString prefsPresentFontBold() { return "present/font_bold"; }
+    static QString prefsPresentFontSize() { return "present/font_size"; }
+    static QString prefsPresentFontType() { return "present/font_type"; }
+    static QString prefsPresentTheme() { return "present/present_theme"; }
+    static QString prefsPreviewFontBold() { return "preview/font_bold"; }
+    static QString prefsPreviewFontSize() { return "preview/font_size"; }
+    static QString prefsPreviewFontType() { return "preview/font_type"; }
+    static QString prefsSearchAllbooks() { return "general/search_all_books"; }
+    static QString prefsSelectedBook() { return "general/selected_book"; }
+    static QString prefsSelectedSong() { return "general/selected_song"; }
+    static QString prefsShowHelpFirst() { return "general/show_help_first"; }
+    static QString prefsShowStartpage() { return "general/show_startpage"; }
+    static QString prefsTabletMode() { return "general/tablet_mode"; }
+
+    static std::vector<QString> preferencesLanguages()
+    {
+        std::vector<QString> languages;
+
+        languages.push_back("English");
+        languages.push_back("Swahili");
+        languages.push_back("French");
+
+        return languages;
+    }
 
     static std::vector<QString> preferencesFontTypes()
     {
@@ -151,34 +165,36 @@ public:
         return prefs;
     }
 
-};
+    static QString appUserDefault() { return "App User"; }
 
-class PrefDefaults
-{
-public:
-    static QString preferencesAppUser() { return "App User"; }
-    static QString preferencesDarkMode() { return "0"; }
-    static QString preferencesEditMode() { return "1"; }
-    static QString preferencesGeneralFontBold() { return "1"; }
-    static QString preferencesGeneralFontSize() { return "20"; }
-    static QString preferencesGeneralFontType() { return "1"; }
-    static QString preferencesInstalledDate() { return ""; }
-    static QString preferencesLanguage() { return "English"; }
-    static QString preferencesLastWindowStartup() { return "1"; }
-    static QString preferencesLastWindowWidth() { return "0"; }
-    static QString preferencesListFontBold() { return "0"; }
-    static QString preferencesPresentFontBold() { return "1"; }
-    static QString preferencesPresentFontSize() { return "40"; }
-    static QString preferencesPresentFontType() { return "1"; }
-    static QString preferencesPreviewFontBold() { return "1"; }
-    static QString preferencesPreviewFontSize() { return "30"; }
-    static QString preferencesPreviewFontType() { return "1"; }
-    static QString preferencesSearchAllbooks() { return "1"; }
-    static QString preferencesSelectedBook() { return "1"; }
-    static QString preferencesSelectedSong() { return "1"; }
-    static QString preferencesShowHelpFirst() { return "1"; }
-    static QString preferencesShowStartpage() { return "1"; }
-    static QString preferencesTabletMode() { return "0"; }
-    static QString preferencesTheme() { return "0"; }
+    static bool defaultPrefs() {
+        QSettings defaultPrefs(AppUtils::appName(), AppUtils::orgDomain());
+
+        defaultPrefs.setValue(PrefUtils::prefsTabletMode(), false);
+        defaultPrefs.setValue(PrefUtils::prefsDarkMode(), false);
+        defaultPrefs.setValue(PrefUtils::prefsEditMode(), false);
+        defaultPrefs.setValue(PrefUtils::prefsSearchAllbooks(), true);
+
+        defaultPrefs.setValue(PrefUtils::prefsLanguage(), 0);
+        defaultPrefs.setValue(PrefUtils::prefsAppUser(), PrefUtils::appUserDefault());
+
+        defaultPrefs.setValue(PrefUtils::prefsGeneralFontType(), 11);
+        defaultPrefs.setValue(PrefUtils::prefsGeneralFontSize(), 12);
+        defaultPrefs.setValue(PrefUtils::prefsGeneralFontBold(), false);
+
+        defaultPrefs.setValue(PrefUtils::prefsPreviewFontType(), 11);
+        defaultPrefs.setValue(PrefUtils::prefsPreviewFontSize(), 18);
+        defaultPrefs.setValue(PrefUtils::prefsPreviewFontBold(), false);
+
+        defaultPrefs.setValue(PrefUtils::prefsPresentFontType(), 11);
+        defaultPrefs.setValue(PrefUtils::prefsPresentFontSize(), 30);
+        defaultPrefs.setValue(PrefUtils::prefsPresentFontBold(), true);
+
+        defaultPrefs.setValue(PrefUtils::prefsPresentTheme(), 0);
+
+        defaultPrefs.setValue(PrefUtils::prefsFirstInstall(), true);
+
+        return true;
+    }
 
 };

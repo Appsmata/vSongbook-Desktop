@@ -3,8 +3,8 @@
 #include <QDateTime>
 
 #include "app_database.h"
-#include "../utils/database_utils.h"
-#include "../utils/preferences_utils.h"
+#include "../utils/db_utils.h"
+#include "../utils/pref_utils.h"
 
 AppDatabase::AppDatabase()
 {
@@ -141,42 +141,6 @@ void AppDatabase::initDbOperations()
     if (!appDB.tables().contains(Tables::search())) {
         qDebug() << "Creating DB table: " + Tables::search() + " failed.";
     }
-
-    //Creating Preferences Table
-    QSqlQuery qry5(appDB);
-    if (!qry5.exec(DbQueries::createPreferenceTable())) {
-        qDebug() << qry5.lastError().text();
-    }
-
-    if (!appDB.tables().contains(Tables::preferences())) {
-        qDebug() << "Creating DB table: " + Tables::preferences() + " failed.";
-    }
-
-    addValue(PrefUtils::preferencesAppUser(),           PrefDefaults::preferencesAppUser());
-    addValue(PrefUtils::preferencesDarkMode(),          PrefDefaults::preferencesDarkMode());
-    addValue(PrefUtils::preferencesEditMode(),          PrefDefaults::preferencesEditMode());
-    addValue(PrefUtils::preferencesGeneralFontBold(),   PrefDefaults::preferencesGeneralFontBold());
-    addValue(PrefUtils::preferencesGeneralFontSize(),   PrefDefaults::preferencesGeneralFontSize());
-    addValue(PrefUtils::preferencesGeneralFontType(),   PrefDefaults::preferencesGeneralFontType());
-    addValue(PrefUtils::preferencesInstalledDate(),     PrefDefaults::preferencesInstalledDate());
-    addValue(PrefUtils::preferencesLanguage(),          PrefDefaults::preferencesLanguage());
-    addValue(PrefUtils::preferencesLastWindowStartup(), PrefDefaults::preferencesLastWindowStartup());
-    addValue(PrefUtils::preferencesLastWindowWidth(),   PrefDefaults::preferencesLastWindowWidth());
-    addValue(PrefUtils::preferencesListFontBold(),      PrefDefaults::preferencesListFontBold());
-    addValue(PrefUtils::preferencesPresentFontBold(),   PrefDefaults::preferencesPresentFontBold());
-    addValue(PrefUtils::preferencesPresentFontSize(),   PrefDefaults::preferencesPresentFontSize());
-    addValue(PrefUtils::preferencesPresentFontType(),   PrefDefaults::preferencesPresentFontType());
-    addValue(PrefUtils::preferencesPreviewFontBold(),   PrefDefaults::preferencesPreviewFontBold());
-    addValue(PrefUtils::preferencesPreviewFontSize(),   PrefDefaults::preferencesPreviewFontSize());
-    addValue(PrefUtils::preferencesPreviewFontType(),   PrefDefaults::preferencesPreviewFontType());
-    addValue(PrefUtils::preferencesSearchAllbooks(),    PrefDefaults::preferencesSearchAllbooks());
-    addValue(PrefUtils::preferencesSelectedBook(),      PrefDefaults::preferencesSelectedBook());
-    addValue(PrefUtils::preferencesSelectedSong(),      PrefDefaults::preferencesSelectedSong());
-    addValue(PrefUtils::preferencesShowHelpFirst(),     PrefDefaults::preferencesShowHelpFirst());
-    addValue(PrefUtils::preferencesShowStartpage(),     PrefDefaults::preferencesShowStartpage());
-    addValue(PrefUtils::preferencesTabletMode(),        PrefDefaults::preferencesTabletMode());
-    addValue(PrefUtils::preferencesTheme(),             PrefDefaults::preferencesTheme());
-
 }
 
 void AppDatabase::checkPreferences()

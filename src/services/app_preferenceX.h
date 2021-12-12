@@ -1,6 +1,6 @@
 #include <QtCore>
 
-#include "../utils/preferences_utils.h"
+#include "../utils/preference_utils.h"
 
 class prefAppUser
 {

@@ -2,6 +2,7 @@
 #define PRESENTOR_WINDOW_H
 
 #include <QMainWindow>
+
 #include "../data/app_database.h"
 #include "../data/models/book.h"
 #include "../data/models/song.h"

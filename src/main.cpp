@@ -4,6 +4,8 @@
 #include <QThread>
 
 #include "data/app_database.h"
+#include "utils/app_utils.h"
+#include "utils/pref_utils.h"
 #include "ui/home_window.h"
 
 int main(int argc, char* argv[])
@@ -17,14 +19,21 @@ int main(int argc, char* argv[])
     app.processEvents();
     splash.close();
 
-    QCoreApplication::setApplicationName("vSongBook");
-    QCoreApplication::setApplicationVersion("3.1.0");
-    QCoreApplication::setOrganizationName("Appsmata Solutions");
-    QCoreApplication::setOrganizationDomain("vsongbook.appsmata.com");
-    
     //Check if database exists otherwise create it
     AppDatabase* appDb = new AppDatabase();
     appDb->checkDatabase();
+
+    QSettings preferences(AppUtils::appName(), AppUtils::orgDomain());
+
+    if (!preferences.value(PrefUtils::prefsFirstInstall()).toBool())
+    {
+        QCoreApplication::setApplicationName(AppUtils::appName());
+        QCoreApplication::setApplicationVersion(AppUtils::appVersion());
+        QCoreApplication::setOrganizationName(AppUtils::orgName());
+        QCoreApplication::setOrganizationDomain(AppUtils::orgDomain());
+
+        PrefUtils::defaultPrefs();
+    }
 
     HomeWindow home;
     home.showMaximized();

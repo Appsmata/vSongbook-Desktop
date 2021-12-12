@@ -7,7 +7,7 @@
 #include <QModelIndex>
 #include <QStandardItemModel>
 
-#include "../data/app_database.h"
+#include "data/app_database.h"
 
 class QStandardItemModel;
 

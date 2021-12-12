@@ -20,7 +20,7 @@ QMenuBar::item:disabled, QMenuBar::item:disabled:hover, QMenuBar::item:disabled:
     color: #000000;
 }
     
-    
+      
 /* QMenu */
     
 QMenu {
@@ -83,7 +83,7 @@ QToolBar QToolButton:disabled {
     color: #A6A5A5;
 }
     
-    
+     
 /* QPushButton QToolButton */
     
 QPushButton, QToolButton {
@@ -110,7 +110,25 @@ QPushButton:disabled, QToolButton:disabled {
     background-color: #DCDCDC;
     color: #A6A5A5;
 }
+     
+QPushButton#btnReset {
+    border-style: none;
+    margin: 10px 0px 10px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
     
+QPushButton#btnReset:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+    
+QPushButton#btnReset:pressed {
+    background-color: #E59866;
+    color: #FFFFFF;
+} 
     
 /* QRadioButton */
     
@@ -158,8 +176,7 @@ QCheckBox::indicator:checked {
 QCheckBox::indicator:checked:disabled {
     image: url(:/themes/brown/checkbox_checked_disable.png);
 }
-    
-    
+   
 /* QLineEdit */
     
 QLineEdit#txtSearch {
@@ -170,14 +187,21 @@ QLineEdit#txtSearch {
         selection-background-color: #FF7700;
         selection-color: #FFFFFF;
         padding: 3px 10px;
-        font-size: 20px;
         color: #000000;
 }
         
-QLineEdit, QPlainTextEdit {
+QLineEdit {
     border: 1px solid #FF7700;
     border-radius: 2px;
-    padding-left: 0px;
+    background: none;
+    selection-background-color: #FF7700;
+    selection-color: #FFFFFF;
+    padding: 3px 10px;
+}
+          
+QPlainTextEdit {
+    border: 1px solid #FF7700;
+    border-radius: 2px;
     background: none;
     selection-background-color: #FF7700;
     selection-color: #FFFFFF;
@@ -240,8 +264,7 @@ QSpinBox::down-button:pressed, QDoubleSpinBox::down-button:pressed, QTimeEdit::d
 QDateEdit::down-button:pressed, QDateTimeEdit::down-button:pressed {
     right: 0.5px;
 }
-    
-    
+   
 /* QLabel */
     
 QLabel#aaaa{
@@ -251,16 +274,15 @@ QLabel#aaaa{
     background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #EDBB99, stop:0.5 #F0B27A, stop:0.8 #F5CBA7, stop:1 #F0F0F0);
     color: #FFFFFF;
 }
-    
-    
+     
 /* QGroupBox */
     
-QGroupBox {
+QGroupBoxx {
     border: 1px solid #FF7700;
     border-radius: 2px;
-    margin-top: 5px;
+    padding: 10px;
 }
-    
+   
 QGroupBox::title {
     subcontrol-origin: margin;
     position: relative;
@@ -274,6 +296,7 @@ QScrollArea {
     border: 1px solid #FF7700;
     border-radius: 3px;
 }
+    
     
     
 /* QTabBar */
