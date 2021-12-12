@@ -2,14 +2,13 @@
 #define HOME_WINDOW_H
 
 #include <QMainWindow>
-#include <QtCore>
 
 #include "../data/app_database.h"
 #include "../data/models/book.h"
 #include "../data/models/song.h"
 
 namespace Ui {
-    class HomeWindow;
+class HomeWindow;
 }
 
 class HomeWindow : public QMainWindow
@@ -71,9 +70,8 @@ private slots:
     void on_chkSearchCriteria_stateChanged(int arg1);
 
     void openPresenter();
-
 private:
-    Ui::HomeWindow* ui;
+    Ui::HomeWindow *ui;
 };
 
 #endif // HOME_WINDOW_H

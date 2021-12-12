@@ -21,6 +21,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res/icons.qrc">
+    <normaloff>:/icons/icons/appicon.ico</normaloff>:/icons/icons/appicon.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="layoutMain">
     <item>
@@ -48,11 +52,27 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="lblSongbook">
+         <property name="text">
+          <string>Songbook</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="layoutTop">
          <item>
-          <widget class="QLabel" name="lblSongbook">
+          <widget class="QLabel" name="lblKey">
            <property name="text">
-            <string>Songbook</string>
+            <string>Key</string>
+           </property>
+           <property name="margin">
+            <number>10</number>
+           </property>
+           <property name="indent">
+            <number>5</number>
            </property>
           </widget>
          </item>
@@ -69,19 +89,6 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lblKey">
-           <property name="text">
-            <string>Key</string>
-           </property>
-           <property name="margin">
-            <number>10</number>
-           </property>
-           <property name="indent">
-            <number>5</number>
            </property>
           </widget>
          </item>
@@ -438,6 +445,7 @@
   </action>
  </widget>
  <resources>
+  <include location="../res/icons.qrc"/>
   <include location="../res/images.qrc"/>
  </resources>
  <connections/>

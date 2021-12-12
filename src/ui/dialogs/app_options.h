@@ -22,7 +22,7 @@ private slots:
     void loadNavigation();
     void loadControls();
     void loadSettings();
-    void loadPrefItems(int page, QString searchstr);
+    void loadPreferenceItems(int page, QString searchstr);
     
     void on_lstNavigation_clicked(const QModelIndex &index);
     void on_lstNavigation_doubleClicked(const QModelIndex &index);
@@ -60,6 +60,8 @@ private slots:
     void on_btnTheme13_clicked();
     void on_btnTheme14_clicked();
     void on_btnTheme15_clicked();
+
+    void on_btnReset_clicked();
 
 private:
     Ui::AppOptions *ui;

@@ -19,8 +19,8 @@
    <string>vSongBook for Desktop</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../res/icons/appicon.ico</normaloff>../res/icons/appicon.ico</iconset>
+   <iconset resource="../res/icons.qrc">
+    <normaloff>:/icons/icons/appicon.ico</normaloff>:/icons/icons/appicon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -206,7 +206,7 @@
           <property name="font">
            <font>
             <family>Trebuchet MS</family>
-            <pointsize>14</pointsize>
+            <pointsize>20</pointsize>
            </font>
           </property>
           <property name="frame">
@@ -231,7 +231,7 @@
           <property name="font">
            <font>
             <family>Trebuchet MS</family>
-            <pointsize>14</pointsize>
+            <pointsize>20</pointsize>
            </font>
           </property>
           <property name="readOnly">
@@ -247,7 +247,7 @@
           <property name="font">
            <font>
             <family>Trebuchet MS</family>
-            <pointsize>14</pointsize>
+            <pointsize>20</pointsize>
            </font>
           </property>
           <property name="readOnly">
@@ -270,7 +270,7 @@
      <x>0</x>
      <y>0</y>
      <width>1073</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -487,6 +487,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

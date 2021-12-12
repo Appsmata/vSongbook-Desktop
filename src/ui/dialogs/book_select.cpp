@@ -9,10 +9,10 @@
 #include <QLocale>
 #include <QObject>
 
-#include "../services/task.h"
-#include "../utils/api_utils.h"
-#include "../data/models/list_item.h"
-#include "../data/delegates/book_delegate.h"
+#include "services/task.h"
+#include "utils/api_utils.h"
+#include "data/models/list_item.h"
+#include "data/delegates/book_delegate.h"
 
 #include "book_select.h"
 #include "ui_book_select.h"
@@ -161,7 +161,7 @@ void BookSelect::on_BtnProceed_clicked()
 
 		msgBox.setWindowTitle("Just a minute ...");
 		QIcon icon;
-		icon.addFile(QStringLiteral(":/images/vSongBook"), QSize(), QIcon::Normal, QIcon::Off);
+		icon.addFile(QStringLiteral(":/images/appicon"), QSize(), QIcon::Normal, QIcon::Off);
 		msgBox.setWindowIcon(icon);
 
 		msgBox.setIcon(QMessageBox::Warning);

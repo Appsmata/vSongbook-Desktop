@@ -1,68 +1,83 @@
+#include <QtCore/QSettings>
+
 #include "presentor_window.h"
 #include "ui_presentor_window.h"
 #include "../utils/app_utils.h"
-#include "../services/app_preference.h"
+#include "../utils/pref_utils.h"
 
-int appTheme, fontSizePresent, fontSizePresentType, selectedSong, slides, slideno, slideIndex;
+int presentorTheme, presentorFontSize, presentorFontType, presenterSong, slides, slideno, slideIndex;
 std::vector<QString> songverses1, songverses2, labels;
-QFont PresentPreview, PresentFont;
-bool isPresentBold, hasChorus;
-QString slide, chorus;
+QFont generalFont, presentorFont;
+bool tabletMode, hasChorus, presentorFontBold;
+QString userName, slide, chorus;
 Song song;
 QIcon iconSmaller, iconBigger, iconDown, iconUp;
+
+QSettings presPrefs(AppUtils::appName(), AppUtils::orgDomain());
 
 PresentorWindow::PresentorWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PresentorWindow)
 {
     ui->setupUi(this);
+    ui->grpMain->setTitle(AppUtils::appName() + " Presentation");
 
-    ui->grpMain->setTitle("vSongBook for Desktop v3.0.2");
-
-	setUpStuff();
     loadSettings();
     loadControls();
+	setUpStuff();
     requestData();
-}
-
-PresentorWindow::~PresentorWindow()
-{
-    delete ui;
-}
-
-void PresentorWindow::setUpStuff()
-{
-
-	if (!prefTabletMode::get())
-    {
-        ui->btnClose->hide();
-        ui->btnBigger->hide();
-        ui->btnSmaller->hide();
-        ui->btnFont->hide();
-        ui->btnBold->hide();
-	}
 }
 
 void PresentorWindow::loadSettings()
 {
-	appTheme = prefTheme::get();
-	fontSizePresent = prefPresentFontSize::get();
-	fontSizePresentType = prefPresentFontType::get();
+	tabletMode = presPrefs.value(PrefUtils::prefsTabletMode()).toBool();
+	userName = presPrefs.value(PrefUtils::prefsAppUser()).toString();
+	presenterSong = presPrefs.value(PrefUtils::prefsSelectedSong()).toInt();
+	presentorTheme = presPrefs.value(PrefUtils::prefsPresentTheme()).toInt();
 
-	PresentPreview.setFamily(PrefUtils::preferencesFontTypes()[prefPreviewFontType::get()]);
-	PresentPreview.setPointSize(prefPreviewFontSize::get());
-	PresentPreview.setBold(prefPreviewFontBold::get());
-	PresentPreview.setWeight(50);
+	presentorFontBold = presPrefs.value(PrefUtils::prefsPresentFontBold()).toBool();
+	presentorFontSize = presPrefs.value(PrefUtils::prefsPresentFontSize()).toInt();
+	presentorFontType = presPrefs.value(PrefUtils::prefsPresentFontType()).toInt();
 
-	PresentFont.setFamily(PrefUtils::preferencesFontTypes()[fontSizePresentType]);
-	PresentFont.setPointSize(prefPresentFontSize::get());
-	PresentFont.setBold(prefPresentFontBold::get());
-	PresentFont.setWeight(50);
+	presentorFont.setFamily(PrefUtils::preferencesFontTypes()[presentorFontType]);
+	presentorFont.setPointSize(presentorFontSize);
+	presentorFont.setBold(presentorFontBold);
+
+	generalFont.setFamily(PrefUtils::preferencesFontTypes()[presentorFontType]);
+
+	if (presentorFontSize > 100)
+		generalFont.setPointSize(presentorFontSize - 20);
+
+	else if (presentorFontSize > 80)
+		generalFont.setPointSize(presentorFontSize - 18);
+
+	else if (presentorFontSize > 60)
+		generalFont.setPointSize(presentorFontSize - 15);
+
+	else if (presentorFontSize > 45)
+		generalFont.setPointSize(presentorFontSize - 10);
+
+	else if (presentorFontSize > 30)
+		generalFont.setPointSize(presentorFontSize - 5);
+
+	generalFont.setBold(presentorFontBold);
+}
+
+void PresentorWindow::setUpStuff()
+{
+	if (!tabletMode)
+	{
+		ui->btnClose->hide();
+		ui->btnBigger->hide();
+		ui->btnSmaller->hide();
+		ui->btnFont->hide();
+		ui->btnBold->hide();
+	}
 }
 
 void PresentorWindow::loadTheme()
 {
-	switch (appTheme)
+	switch (presentorTheme)
 	{
 		case 2:
 			ui->centralwidget->setStyleSheet("* { background-color: #FFFFFF; color: #000000; }");
@@ -181,21 +196,20 @@ void PresentorWindow::loadButtonIcons(bool light)
 
 void PresentorWindow::loadControls()
 {
-	ui->lblTitle->setFont(PresentFont);
-	ui->lblContent->setFont(PresentFont);
-	ui->lblSongbook->setFont(PresentPreview);
-	ui->lblAuthor->setFont(PresentPreview);
-	ui->lblVerse->setFont(PresentPreview);
+	ui->lblTitle->setFont(presentorFont);
+	ui->lblContent->setFont(presentorFont);
+	ui->lblSongbook->setFont(presentorFont);
+	ui->lblAuthor->setFont(presentorFont);
+	ui->lblVerse->setFont(presentorFont);
 	loadTheme();
 }
 
 void PresentorWindow::requestData()
 {
-	selectedSong = prefSelectedSong::get();
-	if (selectedSong > 0)
+	if (presenterSong > 0)
 	{
 		appDb->connectionOpen("present_song");
-		song = appDb->fetchSong(selectedSong);
+		song = appDb->fetchSong(presenterSong);
 		appDb->connectionClose("present_song");
 		if (song.title.length() > 0) presentSong();
 	}
@@ -257,10 +271,9 @@ void PresentorWindow::setPresentation()
         ui->lblAuthor->setText("Public Domain");
     else
         ui->lblAuthor->setText(song.author);
-    if (song.key.size() != 0)
-        ui->lblKey->setText("Key: " + song.key);
-    else
-        ui->lblKey->setText("");
+
+    ui->lblKey->setText("Key: " + song.key);
+
 	ui->lblSongbook->setText(song.book);
 	ui->lblVerse->setText(labels[slideIndex]);
 
@@ -285,17 +298,17 @@ void PresentorWindow::setPresentation()
 
 void PresentorWindow::themeChange()
 {
-	switch (appTheme)
+	switch (presentorTheme)
 	{
 		case 15:
-			appTheme = 1;
+			presentorTheme = 1;
 			break;
 
 		default:
-			appTheme = appTheme + 1;
+			presentorTheme = presentorTheme + 1;
 			break;
 	}
-	prefTheme::set(appTheme);
+	presPrefs.setValue(PrefUtils::prefsPresentTheme(), presentorTheme);
 	loadSettings();
 	loadControls();
 }
@@ -303,17 +316,17 @@ void PresentorWindow::themeChange()
 // Changing of font of the song present
 void PresentorWindow::fontChange()
 {
-	switch (fontSizePresentType)
+	switch (presentorFontType)
 	{
 		case 12:
-			fontSizePresentType = 1;
+			presentorFontType = 1;
 			break;
 
 		default:
-			fontSizePresentType = fontSizePresentType + 1;
+			presentorFontType = presentorFontType + 1;
 			break;
 	}
-	prefPresentFontType::set(fontSizePresentType);
+	presPrefs.setValue(PrefUtils::prefsPresentFontType(), presentorFontType);
 	loadSettings();
 	loadControls();
 }
@@ -321,10 +334,10 @@ void PresentorWindow::fontChange()
 // Reduce Present Font Size
 void PresentorWindow::fontSmaller()
 {
-	if ((fontSizePresent - 2) > 9)
+	if ((presentorFontSize - 2) > 20)
 	{
-        fontSizePresent = fontSizePresent - 2;
-		prefPresentFontSize::set(fontSizePresent);
+        presentorFontSize = presentorFontSize - 2;
+		presPrefs.setValue(PrefUtils::prefsPresentFontSize(), presentorFontSize);
 		loadSettings();
 		loadControls();
 	}
@@ -332,10 +345,10 @@ void PresentorWindow::fontSmaller()
 
 void PresentorWindow::fontBigger()
 {
-	if ((fontSizePresent + 2) < 51)
+	if ((presentorFontSize + 2) < 100)
 	{
-		fontSizePresent = fontSizePresent + 2;
-		prefPresentFontSize::set(fontSizePresent);
+		presentorFontSize = presentorFontSize + 2;
+		presPrefs.setValue(PrefUtils::prefsPresentFontSize(), presentorFontSize);
 		loadSettings();
 		loadControls();
 	}
@@ -343,9 +356,11 @@ void PresentorWindow::fontBigger()
 
 void PresentorWindow::fontBold()
 {
-	if (isPresentBold) isPresentBold = false;
-	else isPresentBold = true;
-	prefPresentFontBold::set(isPresentBold);
+	if (presentorFontBold) 
+		presentorFontBold = false;
+	else 
+		presentorFontBold = true;
+	presPrefs.setValue(PrefUtils::prefsPresentFontBold(), presentorFontBold);
 	loadSettings();
 	loadControls();
 }
@@ -446,4 +461,9 @@ void PresentorWindow::on_btnTheme_clicked()
 void PresentorWindow::on_actionTheme_triggered()
 {
 	themeChange();
+}
+
+PresentorWindow::~PresentorWindow()
+{
+	delete ui;
 }
