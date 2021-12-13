@@ -6,7 +6,7 @@
 !define APP_NAME "vSongBook"
 !define COMP_NAME "AppSmata Solutions"
 !define WEB_SITE "http://Appsmata.com/vSongBook"
-!define VERSION "3.0.2.0"
+!define VERSION "3.1.2.0"
 !define COPYRIGHT "© AppSmata Solutions 2016 - 2021"
 !define DESCRIPTION "${APP_NAME}"
 !define INSTALLER_NAME "outputs\${APP_NAME}_${VERSION}_x64.exe"
@@ -86,13 +86,22 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
+File "x64\vc_redist.x64.exe"
+        
+DetailPrint "Installing Visual C++ 2015 Redistributable (x64)"     
+File "x64\vc_redist.x64.exe" 
+ExecWait "$INSTDIR\vc_redist.x64.exe /q"         
+DetailPrint "Cleaning up"         
+Delete "$INSTDIR\vc_redist.x64.exe"
+
+File "D:\Dev\Cpp\Qt\Projects\vSongBook-Desktop\build-32bit-Release\release\vSongBook.exe"
+
 File "x64\Qt5Core.dll"
 File "x64\Qt5Gui.dll"
 File "x64\Qt5Network.dll"
 File "x64\Qt5Sql.dll"
 File "x64\Qt5Widgets.dll"
 File "x64\vSongBook.exe"
-File "x64\vc_redist.x64.exe"
 SetOutPath "$INSTDIR\data"
 File "data\vSongBookApp.db"
 SetOutPath "$INSTDIR\platforms"
@@ -108,12 +117,6 @@ File "x64\sqldrivers\qsqlodbc.dll"
 File "x64\sqldrivers\qsqlpsql.dll"
 SetOutPath "$INSTDIR\styles"
 File "x64\styles\qwindowsvistastyle.dll"
-        
-DetailPrint "Installing Visual C++ 2015 Redistributable (x64)"     
-File "x64\vc_redist.x64.exe" 
-ExecWait "$INSTDIR\vc_redist.x64.exe /q"         
-DetailPrint "Cleaning up"         
-Delete "$INSTDIR\vc_redist.x64.exe"
 
 SectionEnd
 
