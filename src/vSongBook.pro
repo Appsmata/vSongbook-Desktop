@@ -47,9 +47,8 @@ HEADERS += \
     ui/presentor_window.h \
     utils/api_utils.h \
     utils/app_utils.h \
-    utils/database_utils.h \
-    utils/preference_utils.h \
-    utils/preferences_utils.h
+    utils/db_utils.h \
+    utils/pref_utils.h
 
 FORMS += \
     ui/dialogs/app_about.ui \
@@ -72,3 +71,5 @@ RESOURCES += \
 
 DISTFILES += \
     ui/home_window.ui.bak
+
+win32:RC_ICONS += res\icons\appicon.ico

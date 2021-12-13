@@ -159,6 +159,9 @@
                 <pointsize>12</pointsize>
                </font>
               </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOn</enum>
+              </property>
              </widget>
             </item>
            </layout>
