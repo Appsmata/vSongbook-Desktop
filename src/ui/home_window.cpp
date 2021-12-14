@@ -59,7 +59,7 @@ void HomeWindow::changeStyle(int type)
             fileName = "black.qss";
             break;
         default:
-            fileName = "brown.qss";
+            fileName = "orange.qss";
             break;
     }
 

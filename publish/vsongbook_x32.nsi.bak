@@ -86,14 +86,22 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
+File "x32\vc_redist.x86.exe"
+        
+DetailPrint "Installing Visual C++ 2015 Redistributable (x32)"     
+File "x32\vc_redist.x86.exe" 
+ExecWait "$INSTDIR\vc_redist.x86.exe /q"         
+DetailPrint "Cleaning up"         
+Delete "$INSTDIR\vc_redist.x86.exe"
+
+File "D:\Dev\Cpp\Qt\Projects\vSongBook-Desktop\build-32bit-Release\release\vSongBook.exe"
+
 File "x32\Qt5Core.dll"
 File "x32\Qt5Gui.dll"
 File "x32\Qt5Network.dll"
 File "x32\Qt5Sql.dll"
 File "x32\Qt5Widgets.dll"
 File "x32\vSongBook.exe"
-File "D:\Dev\Cpp\Qt\Projects\vSongBook-Desktop\build-32bit-Release\release\vSongBook.exe"
-File "x32\vc_redist.x86.exe"
 SetOutPath "$INSTDIR\data"
 File "data\vSongBookApp.db"
 SetOutPath "$INSTDIR\platforms"
@@ -109,12 +117,6 @@ File "x32\sqldrivers\qsqlodbc.dll"
 File "x32\sqldrivers\qsqlpsql.dll"
 SetOutPath "$INSTDIR\styles"
 File "x32\styles\qwindowsvistastyle.dll"
-        
-DetailPrint "Installing Visual C++ 2015 Redistributable (x32)"     
-File "x32\vc_redist.x86.exe" 
-ExecWait "$INSTDIR\vc_redist.x86.exe /q"         
-DetailPrint "Cleaning up"         
-Delete "$INSTDIR\vc_redist.x86.exe"
 
 SectionEnd
 
